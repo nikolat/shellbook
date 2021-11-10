@@ -1,24 +1,24 @@
-charset,Shift_JIS
+charset,UTF-8
 type,shell
 name,master
 
 craftman,Salt
-craftmanw,しお
+craftmanw,縺励♀
 craftmanurl,http://tablesalt.o0o0.jp/
 
-//バルーン位置
+readme,readme.txt
+readme.charset,UTF-8
+
+//繝舌Ν繝ｼ繝ｳ菴咲ｽｮ
 sakura.balloon.offsetx,0
 sakura.balloon.offsety,100
 kero.balloon.offsetx,0
 kero.balloon.offsety,0
 
-//ウインドウ位置
+//繧ｦ繧､繝ｳ繝峨え菴咲ｽｮ
 seriko.alignmenttodesktop,free
 
-//readme指定
-readme,readme.txt
-
-//メニュー定義
+//繝｡繝九Η繝ｼ螳夂ｾｩ
 menu.background.bitmap.filename,menu_background.png
 menu.foreground.bitmap.filename,menu_foreground.png
 menu.sidebar.bitmap.filename,menu_sidebar.png

@@ -1,4 +1,4 @@
-charset,Shift_JIS
+charset,UTF-8
 type,ghost
-name,‚µ‚¥‚é‚¸‚©‚ñ
+name,ã—ã‡ã‚‹ãšã‹ã‚“
 directory,shellbook

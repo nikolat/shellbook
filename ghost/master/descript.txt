@@ -1,11 +1,12 @@
-charset,Shift_JIS
+charset,UTF-8
 type,ghost
 shiori,akari.dll
-name,‚µ‚¥‚é‚¸‚©‚ñ
-sakura.name,‚µ‚¥‚é‚¸‚©‚ñ
-kero.name,‚µ‚¨‚è‚Í‚ ‚©‚è
+name,ã—ã‡ã‚‹ãšã‹ã‚“
+sakura.name,ã—ã‡ã‚‹ãšã‹ã‚“
+kero.name,ã—ãŠã‚Šã¯ã‚ã‹ã‚Š
 craftman,Don
 craftmanurl,http://nikolat.herokuapp.com/
 homeurl,http://home.384.jp/evidence/update/shellbook/
 icon,icon.ico
 don't need onmousemove,1
+readme.charset,UTF-8
