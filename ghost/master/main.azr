@@ -1,0 +1,21 @@
+load()
+{
+	//辞書読み込み
+	_script_load("template\util");
+	_script_load("template\event");
+	_script_load("template\resource");
+	//画像ファイルキャッシュ用フォルダ作成
+	if (!_isfile("img\\"))
+	{
+		_dcreate("img\\");
+	}
+}
+unload()
+{
+	//キャッシュ画像ファイル削除
+	array a = _fenum("img")["file"];
+	for (int i = 0; a[i] != nil; i++)
+	{
+		_fdelete("img\\" + a[i]);
+	}
+}

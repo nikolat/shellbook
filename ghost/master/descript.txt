@@ -1,0 +1,11 @@
+charset,Shift_JIS
+type,ghost
+shiori,akari.dll
+name,‚µ‚¥‚é‚¸‚©‚ñ
+sakura.name,‚µ‚¥‚é‚¸‚©‚ñ
+kero.name,‚µ‚¨‚è‚Í‚ ‚©‚è
+craftman,Don
+craftmanurl,http://nikolat.herokuapp.com/
+homeurl,http://home.384.jp/evidence/update/shellbook/
+icon,icon.ico
+don't need onmousemove,1

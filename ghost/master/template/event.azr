@@ -1,0 +1,512 @@
+// 全取得メニュー上限値
+int FETCH_LIMIT = 50;
+//******************************************************************************
+// required event
+//******************************************************************************
+string OnFirstBoot()          { return "\0\s[0]\1\s[10]\e"; }
+string OnBoot()               { return "\0\s[0]\1\s[10]\e"; }
+string OnGhostChanged()       { return "\0\s[0]\1\s[10]\e"; }
+string OnShellChanged()       { return "\0\s[0]\1\s[10]\e"; }
+string OnWindowStateRestore() { return "\0\s[0]\1\s[10]\e"; }
+string OnSurfaceRestore()     { return "\0\s[0]\1\s[10]\e"; }
+string OnClose()              { return "\-\e"; }
+
+//******************************************************************************
+// update event
+//******************************************************************************
+string OnUpdateBegin()            { return "\0\s[0]\_qUpdate Begin.\_q\e"; }
+string OnUpdateReady()            { return "\0\s[0]\_qUpdating...\_q\e"; }
+string OnUpdateComplete(dict ref) { return "\0\s[0]\_q" + ref["Reference0"] + ".\_q\e"; }
+string OnUpdateFailure(dict ref)  { return "\0\s[0]\_q" + ref["Reference0"] + ".\_q\e"; }
+
+//******************************************************************************
+// mouse event
+//******************************************************************************
+//------------------------------------------------------------------------------
+// ダブルクリック
+//------------------------------------------------------------------------------
+string OnMouseDoubleClick(dict ref)
+{
+	return getShowMenuScript();
+}
+
+//------------------------------------------------------------------------------
+// メニュー
+//------------------------------------------------------------------------------
+string getShowMenuScript()
+{
+	string s;
+	s += "\0\_q";
+	s += "\![*]\__q[MenuShowTargetList,attribute]属性一覧表示\__q\n";
+	s += "\![*]\__q[MenuShowTargetList,author]作者一覧表示\__q\n\n";
+	s += "\![*]\__q[MenuCancel]閉じる\__q";
+	s += "\_q\e";	
+	return s;
+}
+string MenuCancel()
+{
+	return "\e";
+}
+
+//------------------------------------------------------------------------------
+// 属性/作者一覧表示
+//------------------------------------------------------------------------------
+string MenuShowTargetList(dict ref)
+{
+	string target = ref["Reference2"];
+	if (dictTagInfo[target] == nil)
+	{
+		_create_thread("TH_MenuShowTargetList", target);
+		return "\0\s[0]\_qdownloading...\_q\e";
+	}
+	return getShowTargetListScript(target);
+}
+TH_MenuShowTargetList(string target)
+{
+	_sleep(0.25);
+	makeTagInfo();
+	_speak(getShowTargetListScript(target));
+}
+string getShowTargetListScript(string target)
+{
+	array a = dictTagInfo[target];
+	int n = _aryvn(a);
+	string s = "\0\s[0]\b[2]\_q";
+	switch (target)
+	{
+	  case "attribute":
+		s += "■属性選択(全" + n + "種)\_n\f[height,-2]";
+		break;
+	  case "author":
+		s += "■作者選択(全" + n + "人)\_n\f[height,-2]";
+		break;
+	  default:
+		break;
+	}
+	for(int i = 0; i < n; i++)
+	{
+		switch(i % 3)
+		{
+		  case 0:
+			s += "\n\_l[0,]";
+			break;
+		  case 1:
+			s += "\_l[100,]";
+			break;
+		  default:
+			s += "\_l[200,]";
+			break;
+		}
+		s += "\![*]\__q[MenuShowShellList," + target + "," + escapeText(a[i]["name"]) + "," + escapeText(a[i]["wikiUrl"]) + "]" + escapeAllTags(a[i]["name"]) + "\__q";
+	}
+	s += "\_n\f[height,default]";
+	s += "\n\![*]\__q[OnMouseDoubleClick]戻る\__q";
+	s += "\n\![*]\__q[MenuCancel]閉じる\__q";
+	s += "\_q\e";
+	return s;
+}
+//------------------------------------------------------------------------------
+// 特定の属性/作者に所属するシェルリスト表示
+//------------------------------------------------------------------------------
+string MenuShowShellList(dict ref)
+{
+	return showShellList(ref["Reference2"], ref["Reference3"], ref["Reference4"]);
+}
+string showShellList(string target, string name, string url)
+{
+	array a = dictTagInfo[target];
+	dict dictInfo;
+	int index;
+	for(int i = 0; a[i] != nil; i++)
+	{
+		dictInfo = a[i];
+		if (dictInfo["name"] == name)
+		{
+			if (dictInfo["shellList"] == nil)
+			{
+				_create_thread("TH_MenuShowShellList", target, name, url, i);
+				return "\0\s[0]\_qdownloading...\_q\e";
+			}
+			index = i;
+			break;
+		}
+	}
+	return getShowShellListScript(target, index);
+}
+TH_MenuShowShellList(string target, string name, string url, int index)
+{
+	_sleep(0.25);
+	dictTagInfo[target] = addShellList(name, url, dictTagInfo[target]);
+	_speak(getShowShellListScript(target, index));
+}
+string getShowShellListScript(string target, int index)
+{
+	//選択ページ記憶リセット
+	iSelectedIndex = -1;
+
+	dict dictInfo = dictTagInfo[target][index];
+	arSelectedShellList = dictInfo["shellList"];
+	strSelectedName = dictInfo["name"];
+	int n = _aryvn(arSelectedShellList);
+	string s = "\0\s[0]\b[2]\_q";
+	s += "■シェル選択(" + dictInfo["name"] + ")(全" + n + "種)\n";
+	for(int i = 0; i < n; i++)
+	{
+		s += "\![*]\__q[MenuShowSelectedShellInfo," + i + "]" + escapeAllTags(arSelectedShellList[i]["shellName"]) + "\__q\n";
+	}
+	if (0 < n && n <= FETCH_LIMIT)
+	{
+		s += "\n\![*]\__q[MenuGetAllSellInfo]全取得(" + n + "件)\__q";
+	}
+	else
+	{
+		s += "\n\![*]\f[color,127,127,127]全取得(" + n + "件)\f[color,default]";
+	}
+	s += "\n\![*]\__q[MenuShowTargetList," + target + "]戻る\__q";
+	s += "\n\![*]\__q[MenuCancel]閉じる\__q";
+	s += "\_q\e";
+	return s;
+}
+//------------------------------------------------------------------------------
+// シェル情報表示
+//------------------------------------------------------------------------------
+// 全取得
+string MenuGetAllSellInfo(dict ref)
+{
+	_create_thread("TH_MenuGetAllSellInfo");
+	return "\0\s[0]\_qdownloading...\_q\e";
+}
+TH_MenuGetAllSellInfo()
+{
+	int n = _aryvn(arSelectedShellList);
+	for(int i = 0; i < n; i++)
+	{
+		string shellName = arSelectedShellList[i]["shellName"];
+		if (dictShellInfo[shellName] == nil)
+		{
+			string s = "\0\s[0]\_qdownloading...(" + (i + 1) + "/" + n + ")\_q\e";
+			_speak(s);
+			setSelectedSellInfo(i);
+		}
+	}
+	_speak(showSelectedShellInfo(0));
+}
+
+// 個別取得
+string MenuShowSelectedShellInfo(dict ref)
+{
+	return checkAndShowShellInfo(ref["Reference2"]);
+}
+string checkAndShowShellInfo(int i)
+{
+	if (_aryvn(arSelectedShellList) == 0)
+	{
+		return "";
+	}
+	if (iSelectedIndex == i)
+	{
+		return "";
+	}
+	string shellName = arSelectedShellList[i]["shellName"];
+	if (dictShellInfo[shellName] == nil)
+	{
+		_create_thread("TH_MenuShowSelectedShellInfo", i);
+		return "\0\s[0]\_qdownloading...\_q\e";
+	}
+	else
+	{
+		return showSelectedShellInfo(i);
+	}
+}
+TH_MenuShowSelectedShellInfo(int i)
+{
+	setSelectedSellInfo(i);
+	_speak(showSelectedShellInfo(i));
+}
+// 表示
+string showSelectedShellInfo(int index)
+{
+	//選択ページ記憶
+	iSelectedIndex = index;
+
+	string shellName = arSelectedShellList[index]["shellName"];
+	string wikiUrl = arSelectedShellList[index]["wikiUrl"];
+	dict dictInfo = dictShellInfo[shellName];
+	int n = _aryvn(arSelectedShellList);
+
+	string s = "\0\s[0]\b[2]\_q";
+	if (enableShowingInfo)
+	{
+		s += "シェル名: " + escapeAllTags(shellName) + "\n";
+		s += "配布元　: " + convertUnicode(escapeAllTags(dictInfo["webSiteName"])) + "\n";
+		if (dictInfo["authorName"] == strSelectedName)
+			s += "作者　　: \f[anchor.font.color,red]\_a[MenuShowShellListWithoutUrl,author," + escapeText(dictInfo["authorName"]) + "]" + convertUnicode(escapeAllTags(dictInfo["authorName"])) + "\_a\f[anchor.font.color,default.anchor]\n";
+		else
+			s += "作者　　: \_a[MenuShowShellListWithoutUrl,author," + escapeText(dictInfo["authorName"]) + "]" + convertUnicode(escapeAllTags(dictInfo["authorName"])) + "\_a\n";
+		s += "属性　　:";
+		for (int i = 0; dictInfo["attribute"][i] != nil; i++)
+		{
+			if (dictInfo["attribute"][i] == strSelectedName)
+				s += " \f[anchor.font.color,red]\_a[MenuShowShellListWithoutUrl,attribute," + escapeText(dictInfo["attribute"][i]) + "]" + escapeAllTags(dictInfo["attribute"][i]) + "\_a\f[anchor.font.color,default.anchor]";
+			else
+				s += " \_a[MenuShowShellListWithoutUrl,attribute," + escapeText(dictInfo["attribute"][i]) + "]" + escapeAllTags(dictInfo["attribute"][i]) + "\_a";
+		}
+		s += "\n";
+		s += "紹介　　: " + escapeAllTags(dictInfo["summary"]) + "\n";
+	}
+	if (enableShowingImage)
+		s += "\_b[" + dictInfo["imagePath"] + ",centerx,centery,--option=opaque,--option=use_self_alpha]";
+	if (index >= 1)
+	{
+		s += "\_l[0,300]\![*]\__q[MenuShowSelectedShellInfo," + (index - 1) + "]前へ\__q";
+	}
+	if (index < n - 1)
+	{
+		s += "\_l[40,300]\![*]\__q[MenuShowSelectedShellInfo," + (index + 1) + "]次へ\__q";
+	}
+	s += "\_l[80,300]\![*]\__q[MenuOpenBrawser," + wikiUrl + "]Webページで見る\__q";
+	s += "\_l[200,300](Page: " + (index + 1) + "/" + n + ")";
+	s += "\n\n\![*]\__q[MenuCancel]閉じる\__q";
+	if (enableShowingImage)
+		s += "\_l[80,]画像表示: <ON> / \![*]\__q[MenuEnableShowingImage,0," + index + "]OFF\__q";
+	else
+		s += "\_l[80,]画像表示: \![*]\__q[MenuEnableShowingImage,1," + index + "]ON\__q / <OFF>";
+	s += "\n";
+	if (enableShowingInfo)
+		s += "\_l[80,]情報表示: <ON> / \![*]\__q[MenuEnableShowingInfo,0," + index + "]OFF\__q";
+	else
+		s += "\_l[80,]情報表示: \![*]\__q[MenuEnableShowingInfo,1," + index + "]ON\__q / <OFF>";
+	s += "\_q\e";
+
+	return s;
+}
+string MenuEnableShowingImage(dict ref)
+{
+	enableShowingImage = ref["Reference2"];
+	int index = ref["Reference3"];
+	return showSelectedShellInfo(index);
+}
+string MenuEnableShowingInfo(dict ref)
+{
+	enableShowingInfo = ref["Reference2"];
+	int index = ref["Reference3"];
+	return showSelectedShellInfo(index);
+}
+string MenuShowShellListWithoutUrl(dict ref)
+{
+	string target = ref["Reference2"];
+	string name = ref["Reference3"];
+	string url;
+	for (int i = 0; dictTagInfo[target][i] != nil; i++)
+	{
+		if (dictTagInfo[target][i]["name"] == name)
+		{
+			url = dictTagInfo[target][i]["wikiUrl"];
+			break;
+		}
+	}
+	if (url != "")
+	{
+		return showShellList(target, name, url);
+	}
+	else
+	{
+		return "";
+	}
+}
+// ブラウザオープン
+string MenuOpenBrawser(dict ref)
+{
+	string url = ref["Reference2"];
+	return "\C\![open,browser," + url + "]\_l[0,0]\_q \_q\e";
+}
+//------------------------------------------------------------------------------
+// マウスホイール
+//------------------------------------------------------------------------------
+string OnMouseWheel(dict ref)
+{
+	return getPagingResult(ref["Reference2"]);
+}
+string getPagingResult(int diff)
+{
+	int i;
+	int max = _aryvn(arSelectedShellList);
+	if (max == 0)
+	{
+		return "";
+	}
+	if (diff > 0)
+	{
+		if (iSelectedIndex >= max - 1)
+		{
+			return "";
+		}
+		i = iSelectedIndex + 1;
+	}
+	if (diff < 0)
+	{
+		if (iSelectedIndex <= 0)
+		{
+			return "";
+		}
+		i = iSelectedIndex - 1;
+	}
+	return checkAndShowShellInfo(i);
+}
+
+//******************************************************************************
+// UI event
+//******************************************************************************
+//------------------------------------------------------------------------------
+// ショートカットキー
+//------------------------------------------------------------------------------
+string OnKeyPress(dict ref)
+{
+	string s;
+	switch (ref["Reference0"])
+	{
+	  case "m":
+		s = getShowMenuScript();
+		break;
+	  case "r":
+		s = "\![reload,shiori]\0\s[0]\_qReloaded.\_q\e";
+		break;
+	  case "right":
+		s = getPagingResult(1);
+		break;
+	  case "left":
+		s = getPagingResult(-1);
+		break;
+	  case "up":
+		s = checkAndShowShellInfo(0);
+		break;
+	  case "down":
+		s = checkAndShowShellInfo(_aryvn(arSelectedShellList) - 1);
+		break;
+	  default:
+		s = "";
+		break;
+	}
+	return s;
+}
+//------------------------------------------------------------------------------
+// 選択肢・アンカー
+//------------------------------------------------------------------------------
+string OnChoiceSelect(dict ref)
+{
+	return _fncstr(ref["Reference0"], ref);
+}
+string OnChoiceSelectEx(dict ref)
+{
+	return _fncstr(ref["Reference1"], ref);
+}
+string OnAnchorSelect(dict ref)
+{
+	return _fncstr(ref["Reference0"], ref);
+}
+string OnAnchorSelectEx(dict ref)
+{
+	return _fncstr(ref["Reference1"], ref);
+}
+//******************************************************************************
+// extra event
+//******************************************************************************
+//------------------------------------------------------------------------------
+// OnRequestValues対応
+//------------------------------------------------------------------------------
+string OnRequestValues(dict ref)
+{
+	string r = "\C\![raiseother," + ref["Reference0"] + ",OnGetValues," + property_0name();
+	for (int i = 1; ref["Reference" + i] != nil; i++)
+	{
+		string s = _fncstr("property_" + _strreplace(ref["Reference" + i], "-", ""));
+		if (s != "")
+		{
+			r += ",\"" + ref["Reference" + i] + "=" + s + "\"";
+		}
+	}
+	r += "]\e";
+	return r;
+}
+//------------------------------------------------------------------------------
+// 基本情報
+//------------------------------------------------------------------------------
+string property_0name()
+{
+	return property_0キャラクター名();
+}
+string property_0キャラクター名()
+{
+	return "しぇるずかん";
+}
+string property_0プロフィール()
+{
+	return "フリーシェルの情報を集積する図鑑。";
+}
+string property_0カード画像パス()
+{
+	return "..\..\..\shellbook\shell\master\surface0.png";
+}
+int property_1NOB()
+{
+	return 1;
+}
+//------------------------------------------------------------------------------
+// CyberSphere
+//------------------------------------------------------------------------------
+string property_0種族()
+{
+	return "本";
+}
+string property_0種族タイプ()
+{
+	return "無機物型";
+}
+string property_0年齢層()
+{
+	return property_0世代();
+}
+string property_0世代()
+{
+	return "不明";
+}
+string property_0性別()
+{
+	return "不明";
+}
+//------------------------------------------------------------------------------
+// CyberSphere／CS.UniMaS 1.0規格
+// http://1boshi.fc2web.com/cs_pr.htm
+//------------------------------------------------------------------------------
+string property_0行動タイプ()
+{
+	return "精神攻撃";
+}
+int property_0LIFE()
+{
+	return 10;
+}
+int property_0STR()
+{
+	return 3;
+}
+int property_0DEX()
+{
+	return 3;
+}
+int property_0AGL()
+{
+	return 3;
+}
+int property_0MIN()
+{
+	return 3;
+}
+int property_0INT()
+{
+	return 3;
+}
+int property_0SEN()
+{
+	return 3;
+}
