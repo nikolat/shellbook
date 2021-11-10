@@ -1,7 +1,7 @@
 //******************************************************************************
 // network update
 //******************************************************************************
-string homeurl()    { return "http://home.384.jp/evidence/update/shellbook/"; }
+string homeurl()    { return "https://raw.githubusercontent.com/nikolat/shellbook/main/"; }
 string useorigin1() { return "1"; }
 
 //******************************************************************************
