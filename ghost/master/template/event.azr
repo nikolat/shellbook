@@ -160,7 +160,7 @@ string getShowShellListScript(string target, int index)
 	}
 	else
 	{
-		s += "\n\![*]\f[color,127,127,127]全取得(" + n + "件)\f[color,default]";
+		s += "\n\![*]\f[color,disable]全取得(" + n + "件)\f[color,default]";
 	}
 	s += "\n\![*]\__q[MenuShowTargetList," + target + "]戻る\__q";
 	s += "\n\![*]\__q[MenuCancel]閉じる\__q";
