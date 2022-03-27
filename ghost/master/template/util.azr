@@ -106,9 +106,9 @@ array getTagList(string url)
 	string line;
 	for(int i = 0; arHtml[i] != nil; i++)
 	{
-		if(arHtml[i] == "                <div id=\"content\">")
+		if(_regex_match(arHtml[i], "^<ul class=\"lsx\">.+$"))
 		{
-			line = arHtml[i + 1];
+			line = arHtml[i];
 			break;
 		}
 	}
