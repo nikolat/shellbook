@@ -5,7 +5,7 @@ name,しぇるずかん
 sakura.name,しぇるずかん
 kero.name,しおりはあかり
 craftman,Don
-craftmanurl,http://nikolat.herokuapp.com/
+craftmanurl,https://nikolat.github.io/
 homeurl,https://raw.githubusercontent.com/nikolat/shellbook/main/
 icon,icon.ico
 don't need onmousemove,1
