@@ -9,7 +9,7 @@ file,ghost/master/saori/imgctl_saori/imgctl_saori.dllfb002da9046cf952d0448927c5
 file,ghost/master/saori/imgctl_saori/imgctl_saori_readme.txta0f78bddbe969f66edb4efac488f6aebsize=13275date=2012-12-21T00:00:00
 file,ghost/master/template/event.azr1ef9e2623d4542fe0d6cefcbdabb0348size=14373date=2012-12-21T00:00:00
 file,ghost/master/template/resource.azr65e0f8fc760eb2128815b4a4120dce9dsize=965date=2012-12-21T00:00:00
-file,ghost/master/template/util.azr94145c887a3e41200ee463fdb285f45csize=11792date=2012-12-21T00:00:00
+file,ghost/master/template/util.azr181aa8dee6b03a335d53e4dc434e5c77size=11896date=2012-12-21T00:00:00
 file,install.txt422517a9547c3dffff171588498973b6size=69date=2012-12-21T00:00:00
 file,readme.txt7322c6e0ca7287292a89b94214f62b5fsize=3321date=2012-12-21T00:00:00
 file,shell/master/descript.txtbb13e768c6934046addd60594f5bd913size=958date=2012-12-21T00:00:00
