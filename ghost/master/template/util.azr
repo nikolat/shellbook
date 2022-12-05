@@ -225,6 +225,10 @@ dict getShellInfo(string url)
 		}
 	}
 	array r = _regex_search(lineImage, "<img src=\"(.+?)\" .+? title=\"(.+?)\" width=\"(\d+?)\" height=\"(\d+?)\"");
+	int width = r[3];
+	int height = r[4];
+	r = {};
+	r = _regex_search(lineImage, "<a href=\"(.+?)\" title=\"(.+?)\" data-lightbox=\"imageset\"");
 	string imgUrl = r[1];
 	string fileName = _regex_replace(r[2], "\:|\?|\"|<|>|\|", "-");
 	string filePath = "img\\" + fileName;
@@ -233,8 +237,6 @@ dict getShellInfo(string url)
 		fileName = "_" + fileName;
 		filePath = "img\\" + fileName;
 	}
-	int width = r[3];
-	int height = r[4];
 
 	string reg;
 	reg += "<table><tbody><tr><td.*?>シェル名</td><td>(.+?)</td></tr>";
