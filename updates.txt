@@ -1,5 +1,5 @@
 charset,UTF-8
-file,delete.txt2494e8e4b4b405cd27ac9aeccfc648fcsize=198date=2012-12-21T00:00:00
+file,delete.txt6343daaccf08d1f4e54013b512d6ddd5size=231date=2012-12-21T00:00:00
 file,ghost/master/akari.dll604e9d9fa66b8ad367d22ccd682a74e4size=889856date=2012-12-21T00:00:00
 file,ghost/master/descript.txtcb6edd1fae632666c16e3a4bed284d53size=307date=2012-12-21T00:00:00
 file,ghost/master/icon.icob2b297a2cc873af4a22053f291e928bcsize=1406date=2012-12-21T00:00:00
