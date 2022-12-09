@@ -1,0 +1,4 @@
+ghost/master/saori/imgctl_saori/imgctl.dll
+ghost/master/saori/imgctl_saori/imgctl_readme.txt
+ghost/master/saori/imgctl_saori/imgctl_saori.dll
+ghost/master/saori/imgctl_saori/imgctl_saori_readme.txt

@@ -304,10 +304,10 @@ int isImageFile(string imagePath)
 {
 	imagePath = "..\..\\" + imagePath;
 	string id = "img";
-	_saoriload("saori\imgctl_saori\imgctl_saori.dll", id);
+	_saoriload("saori\saori-resized-png\resizedpng.dll", id);
 	string filetype = _saorirequest(id, "GetImageType", imagePath)["Result"];
 	_saoriunload(id);
-	string acceptRegexp = "BITMAP|JPEG|PNG|GIF";
+	string acceptRegexp = "AVIF|BMP|DDS|FARBFELD|GIF|HDR|ICO|JPEG|OPENEXR|PNG|PNM|TGA|TIFF|WEBP";
 	return _regex_match(filetype, acceptRegexp);
 }
 
@@ -324,11 +324,8 @@ resizeImage(string pathBefore, string pathAfter, int width, int height)
 	pathBefore = "..\..\\" + pathBefore;
 	pathAfter = "..\..\\" + pathAfter;
 	string id = "img";
-	_saoriload("saori\imgctl_saori\imgctl_saori.dll", id);
-	long i = _saorirequest(id, "ToDIB", pathBefore)["Result"];
-	_saorirequest(id, "ResizeDIB", i, width, height);
-	_saorirequest(id, "DIBtoPNG", pathAfter, i, 0);
-	_saorirequest(id, "DeleteDIB", i);
+	_saoriload("saori\saori-resized-png\resizedpng.dll", id);
+	_saorirequest(id, "ToResizedPng", pathBefore, pathAfter, width, height);
 	_saoriunload(id);
 }
 

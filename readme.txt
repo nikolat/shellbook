@@ -53,13 +53,8 @@
     夜天燈火
       http://le.silk.to/
 
-  imgctl.dll
-    ルーチェ's Homepage
-      http://www.ruche-home.net/
-
-  imgctl_saori.dll
-    JUNK ROOM
-      http://whiteball.m7.coreserver.jp/
+  resizedpng.dll
+      https://github.com/tukinami/saori-resized-png
 
   フリーシェル「かのこ」
     食卓塩
