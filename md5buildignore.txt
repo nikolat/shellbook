@@ -2,9 +2,6 @@
 .github
 .gitignore
 .gitmodules
-readme.md
-ReadMe.md
-README.md
 updates.txt
 updates2.dau
 
