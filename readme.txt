@@ -54,6 +54,7 @@
       http://le.silk.to/
 
   resizedpng.dll
+    Resized Png
       https://github.com/tukinami/saori-resized-png
 
   フリーシェル「かのこ」
