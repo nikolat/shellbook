@@ -3,3 +3,4 @@ ghost/master/saori/imgctl_saori/imgctl_readme.txt
 ghost/master/saori/imgctl_saori/imgctl_saori.dll
 ghost/master/saori/imgctl_saori/imgctl_saori_readme.txt
 ghost/master/saori/imgctl_saori/
+ghost/master/saori/saori-resized-png/resizedpng.dll

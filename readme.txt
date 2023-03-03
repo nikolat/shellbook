@@ -1,7 +1,7 @@
 ========================================================================
 【ソフト名称】しぇるずかん
 【 制 作 者 】Don
-【 動作環境 】Windows11 22H2 + SSP/2.6.24
+【 動作環境 】Windows11 22H2 + SSP/2.6.31
 【 タ イ プ 】「伺か」用ゴースト
 【 取扱種別 】フリーウェア
 【 配布月日 】2021/05/16
@@ -53,9 +53,9 @@
     夜天燈火
       http://le.silk.to/
 
-  resizedpng.dll
-    Resized Png
-      https://github.com/tukinami/saori-resized-png
+  resizedpngmini.dll
+    Resized Png Mini
+      https://github.com/tukinami/saori-resized-png-mini
 
   フリーシェル「かのこ」
     食卓塩

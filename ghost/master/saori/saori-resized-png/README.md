@@ -1,12 +1,17 @@
-# Resized Png
+# Resized Png Mini
 
-[GitHub repository](https://github.com/tukinami/saori-resized-png)
+[GitHub repository](https://github.com/tukinami/saori-resized-png-mini)
 
 ## これは何?
 
 デスクトップマスコット、「伺か」で使用できるSAORIの一種です。
 
+拙作[Resized Png](https://github.com/tukinami/saori-resized-png)
+の機能限定・軽量版になります。
+
 機能としては、指定した画像ファイルを拡大または縮小し、pngとして出力します。
+
+`Resized Png`からの変更点として、読み込める画像形式が限定されています。
 
 「伺か」「SAORI」等の用語については詳しく説明いたしませんのでご了承下さい。
 
@@ -30,19 +35,10 @@ Argument0に、使用する機能名を指定して使用します。
 
 対応している形式は以下(色深度などによっては、対応していない場合があります):
 
-+ `AVIF`
 + `BMP`
-+ `DDS`
-+ `FARBFELD`
 + `GIF`
-+ `HDR`
-+ `ICO`
 + `JPEG`
-+ `OPENEXR`
 + `PNG`
-+ `PNM`
-+ `TGA`
-+ `TIFF`
 + `WEBP`
 
 ### `ToResizedPng`
@@ -78,9 +74,15 @@ Argument0に、使用する機能名を指定して使用します。
 いずれも敬称略。ありがとうございます。
 
 + [winapi\_rs](https://github.com/retep998/winapi-rs) / Peter Atashian
-+ [encoding\_rs](https://github.com/hsivonen/encoding_rs) / Henri Sivonen
-+ [image](https://github.com/image-rs/image) / The image-rs Developers
-+ [fast\_image\_resize](https://github.com/cykooz/fast_image_resize) / Kirill Kuzminykh
++ [png](https://github.com/image-rs/image-png) / The image-rs Developers
++ [gif](https://github.com/image-rs/image-gif) / The image-rs Developers
++ [jpeg-decoder](https://github.com/image-rs/jpeg-decoder) / The image-rs Developers
++ [libwebp-sys](https://github.com/NoXF/libwebp-sys) / XianYou, Kornel Lesiński
++ [tinybmp](https://github.com/embedded-graphics/tinybmp) / James Waples, Ralf Fuest
++ [embedded-graphics](https://github.com/embedded-graphics/embedded-graphics) / James Waples, Ralf Fuest
++ [resize](https://github.com/PistonDevelopers/resize) / Kornel, Kagami Hiiragi
++ [rgb](https://github.com/kornelski/rust-rgb) / Kornel Lesiński
++ (テスト実行時) [encoding\_rs](https://github.com/hsivonen/encoding_rs) / Henri Sivonen
 + (テスト実行時) [tempfile](https://github.com/Stebalien/tempfile) / Steven Allen, The Rust Project Developers, Ashley Mannix, Jason White
 
 
@@ -90,6 +92,6 @@ MITにて配布いたします。
 
 ## 作成者
 
-月波 清火 (tukinami seika) <10forchette@gmail.com>
+月波 清火 (tukinami seika)
 
-[GitHub](https://github.com/tukinami/saori-resized-png)
+[GitHub](https://github.com/tukinami)
