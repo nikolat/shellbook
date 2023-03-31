@@ -3,7 +3,7 @@ file,delete.txta03ac857057580181e07accbe384bf9dsize=283date=2012-12-21T00:00:
 file,ghost/master/akari.dll604e9d9fa66b8ad367d22ccd682a74e4size=889856date=2012-12-21T00:00:00
 file,ghost/master/descript.txtcb6edd1fae632666c16e3a4bed284d53size=307date=2012-12-21T00:00:00
 file,ghost/master/icon.icob2b297a2cc873af4a22053f291e928bcsize=1406date=2012-12-21T00:00:00
-file,ghost/master/main.azrbbc4c9c8b372287136bef7537281e005size=511date=2012-12-21T00:00:00
+file,ghost/master/main.azr185a132bc498ff4fb6355423c6495b7csize=1699date=2012-12-21T00:00:00
 file,ghost/master/saori/saori-resized-png/LICENSEf3c3c8e6b84d05f6d3cf8db4ca04a66esize=1070date=2012-12-21T00:00:00
 file,ghost/master/saori/saori-resized-png/README.md204b8c484b42faccc3ced3a560c7e44fsize=3680date=2012-12-21T00:00:00
 file,ghost/master/saori/saori-resized-png/resizedpngmini.dll9e64c5767eb768748a21c089c5ba715esize=726528date=2012-12-21T00:00:00
